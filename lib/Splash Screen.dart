@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 void main(){
   runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
     home: MyApp(),
   ));
 }
@@ -19,10 +20,17 @@ class _MyAppState extends State<MyApp> {
     return Scaffold(
       backgroundColor:Color(0xff1A1717),
       body:
-      Image(image:
-      AssetImage("images/Todo.png"
-      ),
-      width: 100,
+      Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image(image:
+            AssetImage("images/Todo.png"
+            ),
+            width: 200,
+            ),
+          ],
+        ),
       ) ,
     );
   }
