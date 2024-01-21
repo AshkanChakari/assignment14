@@ -1,37 +1,53 @@
+import 'package:assignment14/LoginPage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-void main(){
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: MyApp(),
-  ));
-}
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+class SplashScreen extends StatefulWidget {
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _SplashScreenState extends State<SplashScreen>
+  with SingleTickerProviderStateMixin {
+    @override
+    //initState
+    void initState() {
+    super.initState();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+      Future.delayed(const Duration(seconds: 4),(){
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => const LoginPage()));
+      });
+  }
+  //dispose
+    @override
+    void dispose() {
+    super.dispose();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+      overlays: SystemUiOverlay.values);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor:Color(0xff1A1717),
       body:
       Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image(image:
-            AssetImage("images/Todo.png"
-            ),
-            width: 200,
-            ),
-          ],
+        child: Expanded(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image(image:
+              AssetImage("images/Todo.png"
+              ),
+              width: 200,
+              ),
+            ],
+          ),
         ),
       ) ,
     );
   }
-}
+  }
