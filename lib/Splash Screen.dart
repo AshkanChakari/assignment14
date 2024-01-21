@@ -17,8 +17,13 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Text(""),
+      backgroundColor:Color(0xff1A1717),
+      body:
+      Image(image:
+      AssetImage("images/Todo.png"
+      ),
+      width: 100,
+      ) ,
     );
   }
 }
