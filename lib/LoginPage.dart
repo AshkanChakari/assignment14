@@ -57,19 +57,23 @@ class _LoginPageState extends State<LoginPage> {
             ),
 
             //border for Sign-up
-            ElevatedButton(onPressed: (){},
-                style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(Color(0xff3CE54D)),
-                  fixedSize: MaterialStatePropertyAll(Size(285, 55))
-                ),
+            ElevatedButton(
+                onPressed: () {},
+                style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStatePropertyAll(Color(0xff3CE54D)),
+                    fixedSize: MaterialStatePropertyAll(Size(285, 55))),
                 child: Row(
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(left: 50),
-                      child: Text("Sign-up for free" , style: TextStyle(color: Colors.black , fontSize: 20),),
+                      child: Text(
+                        "Sign-up for free",
+                        style: TextStyle(color: Colors.black, fontSize: 20),
+                      ),
                     )
                   ],
-                )
-            ),
+                )),
 
             SizedBox(height: 20),
 
@@ -83,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                   backgroundColor: MaterialStatePropertyAll(Colors.black),
                   shadowColor: MaterialStatePropertyAll(Colors.white)),
               child: Row(
-                   children: [
+                children: [
                   Padding(
                     padding: const EdgeInsets.only(right: 20),
                     child: Image(
@@ -92,17 +96,15 @@ class _LoginPageState extends State<LoginPage> {
                       height: 50,
                     ),
                   ),
-
-                      SizedBox(
-                        width: 20,
-                      ),
-
-                      Text(
-                      "Continue with Google",
-                      style: TextStyle(fontSize: 20, color: Color(0xfff8f8f8), fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.justify
-                      ),
-
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Text("Continue with Google",
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Color(0xfff8f8f8),
+                          fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.justify),
                 ],
               ),
             ),
@@ -121,28 +123,41 @@ class _LoginPageState extends State<LoginPage> {
                   backgroundColor: MaterialStatePropertyAll(Colors.black),
                   shadowColor: MaterialStatePropertyAll(Colors.white)),
               child: Row(
-                   children: [
+                children: [
                   Padding(
-                    padding: const EdgeInsets.only(right: 20),
+                    padding: const EdgeInsets.only(right: 3),
                     child: Image(
-                      image: AssetImage("images/google.jpg"),
-                      width: 45,
-                      height: 50,
+                      image: AssetImage("images/facebook.png"),
+                      width: 80,
+                      height: 70,
                     ),
                   ),
-
-                      SizedBox(
-                        width: 20,
-                      ),
-
-                      Text(
-                      "Continue with Google",
-                      style: TextStyle(fontSize: 20, color: Color(0xfff8f8f8), fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.justify
-                      ),
+                  SizedBox(
+                    width: 2,
+                  ),
+                  Text("Continue with Facebook",
+                      style: TextStyle(
+                          fontSize: 19,
+                          color: Color(0xfff8f8f8),
+                          fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.justify),
                 ],
               ),
             ),
+
+            SizedBox(
+              height: 20,
+            ),
+
+            //Text Log-in
+            MaterialButton(
+              onPressed: () {},
+              child: Text("Log-in",
+                  style: TextStyle(
+                      color: Color(0xfff8f8f8),
+                      fontSize: 20,
+                      fontWeight: FontWeight.w900),),
+            )
           ],
         ),
       ),
