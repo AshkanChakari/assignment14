@@ -1,27 +1,45 @@
+import 'package:assignment14/Screen/CatagoriesScreen.dart';
+import 'package:assignment14/Screen/HomeScreen.dart';
 import 'package:flutter/material.dart';
 
-class drawerNavigation extends StatefulWidget {
-  const drawerNavigation({super.key});
+class DrawerNavigation extends StatefulWidget {
+  const DrawerNavigation({Key? key}) : super(key: key);
 
   @override
-  State<drawerNavigation> createState() => _drawerNavigationState();
+  State<DrawerNavigation> createState() => _DrawerNavigationState();
 }
 
-class _drawerNavigationState extends State<drawerNavigation> {
+class _DrawerNavigationState extends State<DrawerNavigation> {
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Drawer(
         child: ListView(
           children: [
-            UserAccountsDrawerHeader(
-              currentAccountPicture: CircleAvatar(
-                backgroundImage: NetworkImage("https://www.google.com/url?sa=i&url=https%3A%2F%2Fpixabay.com%2Fimages%2Fsearch%2Fnature%2F&psig=AOvVaw2dmLV6vrKJPJ-GIzCWrw8L&ust=1706109924590000&source=images&cd=vfe&ved=0CBMQjRxqFwoTCODjhvbo84MDFQAAAAAdAAAAABAE")
+                 UserAccountsDrawerHeader(
+                currentAccountPicture: CircleAvatar(
+                  backgroundImage: AssetImage("images/image.jpeg"),
+                ),
+                accountName: Text("Foo Baz"),
+                accountEmail: Text("Foo.Baz@gmail.com"),
+                decoration: BoxDecoration(
+                  color: Colors.black87,
+                ),
               ),
-              accountName: Text("Ashkan Chakari"),
-              accountEmail: Text("ashkan.chakari@gmail.com"),
-              decoration: BoxDecoration(color: Colors.blue),
+            ListTile(
+              title: Text("Home"),
+              leading: Icon(Icons.home),
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+              },
             ),
+              ListTile(
+              title: Text("Catagories"),
+              leading: Icon(Icons.view_list),
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => CatagoriesScreen()));
+              },
+            )
           ],
         ),
       ),
