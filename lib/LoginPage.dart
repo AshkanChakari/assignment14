@@ -1,4 +1,5 @@
 // import 'package:assignment14/Splash%20Screen.dart';
+import 'package:assignment14/HomeScreen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -149,15 +150,30 @@ class _LoginPageState extends State<LoginPage> {
               height: 20,
             ),
 
-            //Text Log-in
+            //Button Log-in
             MaterialButton(
               onPressed: () {},
-              child: Text("Log-in",
-                  style: TextStyle(
-                      color: Color(0xfff8f8f8),
-                      fontSize: 20,
-                      fontWeight: FontWeight.w900),),
-            )
+              child: Text(
+                "Log-in",
+                style: TextStyle(
+                    color: Color(0xfff8f8f8),
+                    fontSize: 20,
+                    fontWeight: FontWeight.w900),
+              ),
+            ),
+            //Button guest
+            MaterialButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+              },
+              child: Text(
+                "Guest",
+                style: TextStyle(
+                    color: Color(0xfff8f8f8),
+                    fontSize: 20,
+                    fontWeight: FontWeight.w900),
+              ),
+            ),
           ],
         ),
       ),
