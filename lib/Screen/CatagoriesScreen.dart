@@ -29,6 +29,10 @@ class _CatagoriesScreenState extends State<CatagoriesScreen> {
     getAllCategories();
   }
 
+  //I global the SnackBar
+  final GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
+
+
   getAllCategories() async {
     _categoryList = [];
     var categories = await _categoryService.readCategories();
@@ -50,7 +54,6 @@ class _CatagoriesScreenState extends State<CatagoriesScreen> {
       _editCategoryDescriptionController.text = category[0]["description"]??"No Description";
     });
     _editFromDialog(context);
-
   }
 
   _showFromDialog(BuildContext context) {
@@ -60,6 +63,7 @@ class _CatagoriesScreenState extends State<CatagoriesScreen> {
       builder: (param) {
         return AlertDialog(
           actions: [
+            //Button Cancel
             MaterialButton(
               onPressed: () {
                 Navigator.pop(context);
@@ -69,12 +73,19 @@ class _CatagoriesScreenState extends State<CatagoriesScreen> {
                 style: TextStyle(fontWeight: FontWeight.w700),
               ),
             ),
+
+            //Button Save
             MaterialButton(
-              onPressed: () {
+              onPressed: () async {
                 _category.name = _categoryNameController.text;
                 _category.description = _categoryDescriptionController.text;
-                var result = _categoryService.saveCategory(_category);
-                print(result);
+
+                var result = await _categoryService.saveCategory(_category);
+                if(result > 0){
+                  print(result);
+                  Navigator.pop(context);
+                  getAllCategories();
+                }
               },
               child: Text(
                 "Save",
@@ -86,6 +97,7 @@ class _CatagoriesScreenState extends State<CatagoriesScreen> {
           content: SingleChildScrollView(
             child: Column(
               children: [
+                //This is belong to user add text to category place
                 TextField(
                   controller: _categoryNameController,
                   decoration: InputDecoration(
@@ -93,6 +105,8 @@ class _CatagoriesScreenState extends State<CatagoriesScreen> {
                     labelText: "Category",
                   ),
                 ),
+
+                //This is belong to user add text to description place
                 TextField(
                   controller: _categoryDescriptionController,
                   decoration: InputDecoration(
@@ -108,6 +122,7 @@ class _CatagoriesScreenState extends State<CatagoriesScreen> {
     );
   }
 
+  //this is update button, when user update the one list
   _editFromDialog(BuildContext context) {
     return showDialog(
       context: context,
@@ -115,6 +130,7 @@ class _CatagoriesScreenState extends State<CatagoriesScreen> {
       builder: (param) {
         return AlertDialog(
           actions: [
+            //Cancel button
             MaterialButton(
               onPressed: () {
                 Navigator.pop(context);
@@ -124,12 +140,20 @@ class _CatagoriesScreenState extends State<CatagoriesScreen> {
                 style: TextStyle(fontWeight: FontWeight.w700),
               ),
             ),
+
+            //Update button
             MaterialButton(
-              onPressed: () {
-                _category.name = _categoryNameController.text;
-                _category.description = _categoryDescriptionController.text;
-                var result = _categoryService.saveCategory(_category);
-                print(result);
+              onPressed: () async {
+                _category.id = category[0]["id"];
+                _category.name = _editCategoryNameController.text;
+                _category.description = _editCategoryDescriptionController.text;
+
+                var result = await _categoryService.updateCategory(_category);
+                if(result > 0){
+                  Navigator.pop(context);
+                  getAllCategories();
+                }
+                _showSuccessSnackBar(Text("updated"));
               },
               child: Text(
                 "Update",
@@ -137,7 +161,7 @@ class _CatagoriesScreenState extends State<CatagoriesScreen> {
               ),
             ),
           ],
-          title: Text("Categories Form"),
+          title: Text("Edit Categories Form"),
           content: SingleChildScrollView(
             child: Column(
               children: [
@@ -163,9 +187,58 @@ class _CatagoriesScreenState extends State<CatagoriesScreen> {
     );
   }
 
+  //this is delete button, when user delete the one list
+  _deleteFromDialog(BuildContext context , categoryId) {
+    return showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (param) {
+        return AlertDialog(
+          actions: [
+
+            //Cancel button
+            MaterialButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text(
+                "Cancel",
+                style: TextStyle(fontWeight: FontWeight.w700),
+              ),
+            ),
+
+            //Delete button
+            MaterialButton(
+              onPressed: () async {
+                var result = await _categoryService.deleteCategory(categoryId);
+                if(result > 0){
+                  Navigator.pop(context);
+                  getAllCategories();
+                  _showSuccessSnackBar(Text("Deleted"));
+                }
+              },
+              child: Text(
+                "Delete",
+                style: TextStyle(fontWeight: FontWeight.w700),
+              ),
+            ),
+          ],
+          title: Text("Are you sure you want to delete?" , style: TextStyle(fontSize: 19,),),
+        );
+      },
+    );
+  }
+
+  //This is for snackBar while user pressed the update button the snackBar show from btm emulator or mobile
+  _showSuccessSnackBar(message) {
+    var _snackBar = SnackBar(content: message);
+    ScaffoldMessenger.of(context).showSnackBar(_snackBar);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _globalKey,
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.white),
         backgroundColor: Color(0xff1A1717),
@@ -187,7 +260,9 @@ class _CatagoriesScreenState extends State<CatagoriesScreen> {
                   children: [
                     Text(_categoryList[index].name!),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        _deleteFromDialog(context , _categoryList[index].id);
+                      },
                       icon: Icon(Icons.delete, color: Colors.red),
                     ),
                   ],

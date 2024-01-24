@@ -1,8 +1,10 @@
 import 'package:assignment14/Screen/drawerNavigation.dart';
+import 'package:assignment14/Screen/todoScreen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
     home: HomeScreen(),
   ));
 }
@@ -26,7 +28,17 @@ class _HomeScreenState extends State<HomeScreen> {
           style: TextStyle(color: Colors.white),
         ),
       ),
-       drawer: DrawerNavigation(),
+      drawer: DrawerNavigation(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => todoScreen()));
+        },
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
+        backgroundColor: Colors.black,
+      ),
     );
   }
 }
