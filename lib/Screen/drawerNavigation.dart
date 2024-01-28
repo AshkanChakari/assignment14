@@ -1,5 +1,6 @@
 import 'package:assignment14/Screen/CatagoriesScreen.dart';
 import 'package:assignment14/Screen/HomeScreen.dart';
+import 'package:assignment14/Screen/todo_by_category.dart';
 import 'package:assignment14/services/CategoriesService.dart';
 import 'package:flutter/material.dart';
 
@@ -11,61 +12,70 @@ class DrawerNavigation extends StatefulWidget {
 }
 
 class _DrawerNavigationState extends State<DrawerNavigation> {
-  List<Widget> _categoryList = List<Widget>.empty();
+  List<Widget> _categoryList = [];
 
   CategoryService _categoryService = CategoryService();
 
   @override
-  initState(){
+  void initState() {
     super.initState();
     getAllCategories();
   }
 
-
-
-  getAllCategories() async {
+  Future<void> getAllCategories() async {
     var categories = await _categoryService.readCategories();
 
-    categories.forEach((category) {
-      setState(() {
-        _categoryList.add(ListTile(title: Text(category["name"]),
-        ));
-      });
+    setState(() {
+      _categoryList = categories.map<Widget>((category) {
+        return InkWell(
+          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => TodosByCategory(category: null!))),
+          child: ListTile(
+            title: Text(category["name"]),
+          ),
+        );
+      }).toList();
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Drawer(
         child: ListView(
           children: [
-                 UserAccountsDrawerHeader(
-                currentAccountPicture: CircleAvatar(
-                  backgroundImage: AssetImage("images/image.jpeg"),
-                ),
-                accountName: Text("Foo Baz"),
-                accountEmail: Text("Foo.Baz@gmail.com"),
-                decoration: BoxDecoration(
-                  color: Colors.black87,
-                ),
+            UserAccountsDrawerHeader(
+              currentAccountPicture: CircleAvatar(
+                backgroundImage: AssetImage("images/image.jpeg"),
               ),
+              accountName: Text("Foo Baz"),
+              accountEmail: Text("Foo.Baz@gmail.com"),
+              decoration: BoxDecoration(
+                color: Colors.black87,
+              ),
+            ),
             ListTile(
               title: Text("Home"),
               leading: Icon(Icons.home),
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomeScreen()),
+                );
               },
             ),
-              ListTile(
-              title: Text("Catagories"),
+            ListTile(
+              title: Text("Categories"),
               leading: Icon(Icons.view_list),
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => CatagoriesScreen()));
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CatagoriesScreen()),
+                );
               },
             ),
             Divider(),
             Column(
-              children: _categoryList
+              children: _categoryList,
             )
           ],
         ),
